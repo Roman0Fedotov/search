@@ -1,3 +1,14 @@
+// Функция для экранирования HTML
+function escapeHtml(unsafe) {
+  if (unsafe === undefined || unsafe === null) return '';
+  return unsafe.toString()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 // Объект для хранения данных
 let textsData = [];
 
@@ -67,47 +78,50 @@ function performSearch() {
 
     // Если нашли совпадения
     if (foundTokens.length > 0) {
-      // 2. Формируем полное предложение с подсветкой
-      let fullSentence = text.full_text;
+      // 2. Формируем предложение из токенов
+      let tokenHtml = '';
       
-      // Создаем копию для безопасного изменения
-      let highlightedSentence = fullSentence;
-      
-      // Подсвечиваем все найденные слова в обратном порядке
-      // (чтобы позиции не смещались при вставке тегов)
-      for (let i = foundTokens.length - 1; i >= 0; i--) {
-        const token = foundTokens[i];
+      for (let i = 0; i < text.tokens.length; i++) {
+        const token = text.tokens[i];
         
-        // Создаем шаблон для поиска с учетом возможных вариаций
-     const searchPattern = new RegExp(
-          `(^|[^\\p{L}])(${escapeRegExp(token.form)})(?=[^\\p{L}]|$)`, 
-          'giu'
+        // Проверяем, нужно ли подсветить токен
+        const isFound = foundTokens.some(t => 
+          t.form === token.form && 
+          t.lemma === token.lemma && 
+          t.pos === token.pos
         );
         
-        // Заменяем вхождения на подсвеченные версии
-        highlightedSentence = highlightedSentence.replace(
-          searchPattern, 
-          `$1<span class="highlight">$2</span>`
-        );
+        // Формируем текст для тултипа
+        const tooltipText = `Лемма: ${token.lemma}\nЧасть речи: ${getPosName(token.pos)}\nАнализ: ${token.ana}`;
+        
+        // Создаем классы для токена
+        const spanClass = 'token' + (isFound ? ' highlight' : '');
+        
+        // Создаем HTML для токена
+        tokenHtml += `<span class="${escapeHtml(spanClass)}" 
+                          data-lemma="${escapeHtml(token.lemma)}"
+                          data-pos="${escapeHtml(token.pos)}"
+                          data-ana="${escapeHtml(token.ana)}"
+                          data-tooltip="${escapeHtml(tooltipText)}">${escapeHtml(token.form)}</span>`;
+        
+        // Добавляем пробел после токена, если следующий не пунктуация
+        if (i < text.tokens.length - 1 && text.tokens[i+1].pos !== 'punct') {
+          tokenHtml += ' ';
+        }
       }
-
-      // 3. Добавляем результат с полным предложением
+      
+      // 3. Добавляем результат
       results.push({
         textId: text.id,
         textTitle: text.title,
         foundTokens: foundTokens,
-        sentence: highlightedSentence
+        sentence: tokenHtml
       });
     }
   });
   
   // Отображаем результаты
   displayResults(results);
-}
-
-// Вспомогательная функция для экранирования спецсимволов в регулярках
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // Функция отображения результатов

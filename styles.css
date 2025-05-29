@@ -123,8 +123,33 @@ h1 {
   line-height: 1.5;
 }
 
-/* Подсветка искомых слов */
-.result-item .highlight {
+/* Стили для токенов и тултипов */
+.sentence .token {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.sentence .token:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  white-space: pre;
+  font-size: 13px;
+  z-index: 100;
+  text-align: left;
+  min-width: 220px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  pointer-events: none;
+}
+
+.sentence .token.highlight {
   background-color: #fffacd;
   font-weight: bold;
   padding: 0 3px;
@@ -179,5 +204,12 @@ h1 {
   
   .result-item .details span {
     white-space: normal;
+  }
+  
+  .sentence .token:hover::after {
+    min-width: 180px;
+    font-size: 12px;
+    left: 0;
+    transform: none;
   }
 }
