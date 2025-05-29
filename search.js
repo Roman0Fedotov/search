@@ -143,7 +143,7 @@ function displayResults(results) {
       <div class="details">
         ${result.foundTokens.map(token => `
           <span>
-            Слово: <b>${token.form}</b> | 
+            Словоформа: <b>${token.form}</b> | 
             Лемма: ${token.lemma} | 
             Часть речи: ${getPosName(token.pos)} | 
             Анализ: ${token.ana}
