@@ -1,15 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <title>Поиск лемм</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Поисковик лемм</title>
+  <!-- Подключаем стили -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Поиск по леммам</h1>
-    <input type="text" id="searchInput" placeholder="Введите лемму...">
+    <h1>Поиск по леммам в текстах</h1>
+    
+    <!-- Поисковая строка -->
+    <div class="search-box">
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Введите лемму (например: читать)"
+        autocomplete="off"
+      >
+      <div class="search-icon">🔍</div>
+    </div>
+    
+    <!-- Фильтры -->
+    <div class="filters">
+      <label>
+        <input type="checkbox" id="filterNouns"> Существительные
+      </label>
+      <label>
+        <input type="checkbox" id="filterVerbs"> Глаголы
+      </label>
+      <label>
+        <input type="checkbox" id="filterAdjectives"> Прилагательные
+      </label>
+    </div>
+    
+    <!-- Статус загрузки -->
+    <div id="loadingStatus">Загрузка данных...</div>
+    
+    <!-- Результаты поиска -->
     <div id="results"></div>
+    
+    <!-- Статистика -->
+    <div id="stats" class="stats"></div>
   </div>
+  
+  <!-- Подключаем скрипт -->
   <script src="search.js"></script>
 </body>
 </html>
