@@ -123,6 +123,16 @@ h1 {
   line-height: 1.5;
 }
 
+/* ЯРКАЯ ПОДСВЕТКА */
+.highlight {
+  background-color: #ff0; /* Ярко-желтый */
+  color: #000;
+  font-weight: bold;
+  padding: 0 2px;
+  border-radius: 3px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
 .result-item .details {
   display: flex;
   gap: 15px;
@@ -146,15 +156,6 @@ h1 {
   color: #7f8c8d;
   font-size: 14px;
   border-top: 1px solid #eee;
-}
-
-/* Подсветка найденных слов */
-.highlight {
-  background-color: #ffeb3b;
-  font-weight: bold;
-  padding: 0 2px;
-  border-radius: 3px;
-  box-shadow: 0 0 3px rgba(0,0,0,0.3);
 }
 
 /* Сообщения */

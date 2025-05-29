@@ -39,14 +39,11 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-// Функция для подсветки слова (исправленная)
+// ПРОСТАЯ И ЭФФЕКТИВНАЯ ФУНКЦИЯ ПОДСВЕТКИ
 function highlightWord(sentence, word) {
-  // Создаем регулярное выражение для точного слова
-  const regex = new RegExp(`(^|[\\s\\p{P}](${escapeRegExp(word)})($|[\\s\\p{P}])`, 'giu');
-  
-  return sentence.replace(regex, (match, prefix, wordMatch, suffix) => {
-    return `${prefix}<span class="highlight">${wordMatch}</span>${suffix}`;
-  });
+  const escapedWord = escapeRegExp(word);
+  const regex = new RegExp(`(${escapedWord})`, 'gi');
+  return sentence.replace(regex, '<span class="highlight">$1</span>');
 }
 
 // Функция поиска
@@ -66,15 +63,10 @@ function performSearch() {
   if (filterVerbs.checked) activeFilters.push('verb');
   if (filterAdjectives.checked) activeFilters.push('adjective');
   
-  // Перебираем все тексты
   textsData.forEach(text => {
-    // Перебираем все токены в тексте
     text.tokens.forEach(token => {
-      // Проверяем совпадение по лемме
       if (token.lemma.toLowerCase().includes(query)) {
-        // Проверяем фильтры
         if (activeFilters.length === 0 || activeFilters.includes(token.pos)) {
-          // Добавляем результат
           results.push({
             textId: text.id,
             textTitle: text.title,
@@ -89,7 +81,6 @@ function performSearch() {
     });
   });
   
-  // Отображаем результаты
   displayResults(results);
 }
 
@@ -102,17 +93,13 @@ function displayResults(results) {
     return;
   }
   
-  // Формируем HTML для результатов
   resultsDiv.innerHTML = results.map(result => {
-    // Подсвечиваем слово в предложении
     const highlightedSentence = highlightWord(result.sentence, result.form);
     
     return `
       <div class="result-item">
         <h3>${result.textTitle} (ID: ${result.textId})</h3>
-        
         <div class="sentence">${highlightedSentence}</div>
-        
         <div class="details">
           <span>Слово: <b>${result.form}</b></span>
           <span>Лемма: ${result.lemma}</span>
