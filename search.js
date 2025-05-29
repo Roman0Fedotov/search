@@ -79,7 +79,7 @@ function performSearch() {
         const token = foundTokens[i];
         
         // Создаем шаблон для поиска с учетом возможных вариаций
-        const searchPattern = new RegExp(`\\b${escapeRegExp(token.form)}\\b`, 'gi');
+        const searchPattern = new RegExp(`${escapeRegExp(token.form)}`, 'gi');
         
         // Заменяем вхождения на подсвеченные версии
         highlightedSentence = highlightedSentence.replace(
