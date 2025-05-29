@@ -34,17 +34,20 @@ function loadData() {
     });
 }
 
-// Функция для подсветки слова в предложении
-function highlightWord(sentence, start, end) {
-  // Вырезаем слово из предложения
-  const word = sentence.substring(start, end);
+// Улучшенная функция для подсветки слова в предложении
+function highlightWord(sentence, word) {
+  // Создаем регулярное выражение для поиска точного слова
+  const regex = new RegExp(`\\b${escapeRegExp(word)}\\b`, 'gi');
   
-  // Создаем подсвеченную версию
-  return (
-    sentence.substring(0, start) +
-    `<span class="highlight">${word}</span>` +
-    sentence.substring(end)
+  // Заменяем все вхождения слова с подсветкой
+  return sentence.replace(regex, match => 
+    `<span class="highlight">${match}</span>`
   );
+}
+
+// Функция для экранирования спецсимволов в регулярных выражениях
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // Функция поиска
@@ -72,7 +75,7 @@ function performSearch() {
       if (token.lemma.toLowerCase().includes(query)) {
         // Проверяем фильтры
         if (activeFilters.length === 0 || activeFilters.includes(token.pos)) {
-          // Добавляем результат с информацией о позиции
+          // Добавляем результат
           results.push({
             textId: text.id,
             textTitle: text.title,
@@ -80,9 +83,7 @@ function performSearch() {
             lemma: token.lemma,
             pos: token.pos,
             ana: token.ana,
-            sentence: text.sentence,
-            start: token.start,
-            end: token.end
+            sentence: text.sentence
           });
         }
       }
@@ -105,11 +106,7 @@ function displayResults(results) {
   // Формируем HTML для результатов
   resultsDiv.innerHTML = results.map(result => {
     // Подсвечиваем слово в предложении
-    const highlightedSentence = highlightWord(
-      result.sentence, 
-      result.start, 
-      result.end
-    );
+    const highlightedSentence = highlightWord(result.sentence, result.form);
     
     return `
       <div class="result-item">
@@ -138,8 +135,7 @@ function getPosName(abbr) {
     'preposition': 'предлог',
     'conjunction': 'союз',
     'pronoun': 'местоимение',
-    'gerund': 'деепричастие',
-    'punctuation': 'знак препинания'
+    'gerund': 'деепричастие'
   };
   
   return posMap[abbr] || abbr;

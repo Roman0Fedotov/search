@@ -4,13 +4,12 @@
     "title": "Мальчик читает книгу",
     "sentence": "Мальчик читает старую книгу на столе.",
     "tokens": [
-      {"form": "Мальчик", "lemma": "мальчик", "pos": "noun", "ana": "n:m:sg:nom", "start": 0, "end": 7},
-      {"form": "читает", "lemma": "читать", "pos": "verb", "ana": "v:ipf:3sg:pres", "start": 8, "end": 14},
-      {"form": "старую", "lemma": "старый", "pos": "adjective", "ana": "adj:f:sg:acc", "start": 15, "end": 21},
-      {"form": "книгу", "lemma": "книга", "pos": "noun", "ana": "n:f:sg:acc", "start": 22, "end": 27},
-      {"form": "на", "lemma": "на", "pos": "preposition", "ana": "prep:loc", "start": 28, "end": 30},
-      {"form": "столе", "lemma": "стол", "pos": "noun", "ana": "n:m:sg:loc", "start": 31, "end": 36},
-      {"form": ".", "lemma": ".", "pos": "punctuation", "ana": "", "start": 36, "end": 37}
+      {"form": "Мальчик", "lemma": "мальчик", "pos": "noun", "ana": "n:m:sg:nom"},
+      {"form": "читает", "lemma": "читать", "pos": "verb", "ana": "v:ipf:3sg:pres"},
+      {"form": "старую", "lemma": "старый", "pos": "adjective", "ana": "adj:f:sg:acc"},
+      {"form": "книгу", "lemma": "книга", "pos": "noun", "ana": "n:f:sg:acc"},
+      {"form": "на", "lemma": "на", "pos": "preposition", "ana": "prep:loc"},
+      {"form": "столе", "lemma": "стол", "pos": "noun", "ana": "n:m:sg:loc"}
     ]
   },
   {
@@ -18,17 +17,15 @@
     "title": "Книга на столе",
     "sentence": "Книга на столе открыта, и девочка читает её внимательно.",
     "tokens": [
-      {"form": "Книга", "lemma": "книга", "pos": "noun", "ana": "n:f:sg:nom", "start": 0, "end": 5},
-      {"form": "на", "lemma": "на", "pos": "preposition", "ana": "prep:loc", "start": 6, "end": 8},
-      {"form": "столе", "lemma": "стол", "pos": "noun", "ana": "n:m:sg:loc", "start": 9, "end": 14},
-      {"form": "открыта", "lemma": "открытый", "pos": "adjective", "ana": "adj:f:sg:nom:short", "start": 15, "end": 22},
-      {"form": ",", "lemma": ",", "pos": "punctuation", "ana": "", "start": 22, "end": 23},
-      {"form": "и", "lemma": "и", "pos": "conjunction", "ana": "conj", "start": 24, "end": 25},
-      {"form": "девочка", "lemma": "девочка", "pos": "noun", "ana": "n:f:sg:nom", "start": 26, "end": 33},
-      {"form": "читает", "lemma": "читать", "pos": "verb", "ana": "v:ipf:3sg:pres", "start": 34, "end": 40},
-      {"form": "её", "lemma": "она", "pos": "pronoun", "ana": "pron:3sg:f:acc", "start": 41, "end": 43},
-      {"form": "внимательно", "lemma": "внимательный", "pos": "adverb", "ana": "adv", "start": 44, "end": 55},
-      {"form": ".", "lemma": ".", "pos": "punctuation", "ana": "", "start": 55, "end": 56}
+      {"form": "Книга", "lemma": "книга", "pos": "noun", "ana": "n:f:sg:nom"},
+      {"form": "на", "lemma": "на", "pos": "preposition", "ana": "prep:loc"},
+      {"form": "столе", "lemma": "стол", "pos": "noun", "ana": "n:m:sg:loc"},
+      {"form": "открыта", "lemma": "открытый", "pos": "adjective", "ana": "adj:f:sg:nom:short"},
+      {"form": "и", "lemma": "и", "pos": "conjunction", "ana": "conj"},
+      {"form": "девочка", "lemma": "девочка", "pos": "noun", "ana": "n:f:sg:nom"},
+      {"form": "читает", "lemma": "читать", "pos": "verb", "ana": "v:ipf:3sg:pres"},
+      {"form": "её", "lemma": "она", "pos": "pronoun", "ana": "pron:3sg:f:acc"},
+      {"form": "внимательно", "lemma": "внимательный", "pos": "adverb", "ana": "adv"}
     ]
   },
   {
@@ -36,16 +33,14 @@
     "title": "Стол у окна",
     "sentence": "Стол стоит у окна, а книга лежит рядом.",
     "tokens": [
-      {"form": "Стол", "lemma": "стол", "pos": "noun", "ana": "n:m:sg:nom", "start": 0, "end": 4},
-      {"form": "стоит", "lemma": "стоять", "pos": "verb", "ana": "v:ipf:3sg:pres", "start": 5, "end": 10},
-      {"form": "у", "lemma": "у", "pos": "preposition", "ana": "prep:gen", "start": 11, "end": 12},
-      {"form": "окна", "lemma": "окно", "pos": "noun", "ana": "n:n:sg:gen", "start": 13, "end": 17},
-      {"form": ",", "lemma": ",", "pos": "punctuation", "ana": "", "start": 17, "end": 18},
-      {"form": "а", "lemma": "а", "pos": "conjunction", "ana": "conj", "start": 19, "end": 20},
-      {"form": "книга", "lemma": "книга", "pos": "noun", "ana": "n:f:sg:nom", "start": 21, "end": 26},
-      {"form": "лежит", "lemma": "лежать", "pos": "verb", "ana": "v:ipf:3sg:pres", "start": 27, "end": 32},
-      {"form": "рядом", "lemma": "рядом", "pos": "adverb", "ana": "adv", "start": 33, "end": 38},
-      {"form": ".", "lemma": ".", "pos": "punctuation", "ana": "", "start": 38, "end": 39}
+      {"form": "Стол", "lemma": "стол", "pos": "noun", "ana": "n:m:sg:nom"},
+      {"form": "стоит", "lemma": "стоять", "pos": "verb", "ana": "v:ipf:3sg:pres"},
+      {"form": "у", "lemma": "у", "pos": "preposition", "ana": "prep:gen"},
+      {"form": "окна", "lemma": "окно", "pos": "noun", "ana": "n:n:sg:gen"},
+      {"form": "а", "lemma": "а", "pos": "conjunction", "ana": "conj"},
+      {"form": "книга", "lemma": "книга", "pos": "noun", "ana": "n:f:sg:nom"},
+      {"form": "лежит", "lemma": "лежать", "pos": "verb", "ana": "v:ipf:3sg:pres"},
+      {"form": "рядом", "lemma": "рядом", "pos": "adverb", "ana": "adv"}
     ]
   },
   {
@@ -53,16 +48,14 @@
     "title": "Чтение за столом",
     "sentence": "Они читают книгу вместе, сидя за большим столом.",
     "tokens": [
-      {"form": "Они", "lemma": "они", "pos": "pronoun", "ana": "pron:3pl:nom", "start": 0, "end": 3},
-      {"form": "читают", "lemma": "читать", "pos": "verb", "ana": "v:ipf:3pl:pres", "start": 4, "end": 10},
-      {"form": "книгу", "lemma": "книга", "pos": "noun", "ana": "n:f:sg:acc", "start": 11, "end": 16},
-      {"form": "вместе", "lemma": "вместе", "pos": "adverb", "ana": "adv", "start": 17, "end": 23},
-      {"form": ",", "lemma": ",", "pos": "punctuation", "ana": "", "start": 23, "end": 24},
-      {"form": "сидя", "lemma": "сидеть", "pos": "gerund", "ana": "v:ger", "start": 25, "end": 29},
-      {"form": "за", "lemma": "за", "pos": "preposition", "ana": "prep:ins", "start": 30, "end": 32},
-      {"form": "большим", "lemma": "большой", "pos": "adjective", "ana": "adj:m:sg:ins", "start": 33, "end": 40},
-      {"form": "столом", "lemma": "стол", "pos": "noun", "ana": "n:m:sg:ins", "start": 41, "end": 47},
-      {"form": ".", "lemma": ".", "pos": "punctuation", "ana": "", "start": 47, "end": 48}
+      {"form": "Они", "lemma": "они", "pos": "pronoun", "ana": "pron:3pl:nom"},
+      {"form": "читают", "lemma": "читать", "pos": "verb", "ana": "v:ipf:3pl:pres"},
+      {"form": "книгу", "lemma": "книга", "pos": "noun", "ana": "n:f:sg:acc"},
+      {"form": "вместе", "lemma": "вместе", "pos": "adverb", "ana": "adv"},
+      {"form": "сидя", "lemma": "сидеть", "pos": "gerund", "ana": "v:ger"},
+      {"form": "за", "lemma": "за", "pos": "preposition", "ana": "prep:ins"},
+      {"form": "большим", "lemma": "большой", "pos": "adjective", "ana": "adj:m:sg:ins"},
+      {"form": "столом", "lemma": "стол", "pos": "noun", "ana": "n:m:sg:ins"}
     ]
   }
 ]
