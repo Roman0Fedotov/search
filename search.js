@@ -79,16 +79,15 @@ function performSearch() {
         const token = foundTokens[i];
         
         // Создаем шаблон для поиска с учетом возможных вариаций
-        const searchPattern = new RegExp(
-          (^|[^\\p{L}])(${escapeRegExp(token.form)})(?=[^\\p{L}]|$),
-          'giu'
-        );
+        const searchPattern = new RegExp(`\\b${escapeRegExp(token.form)}\\b`, 'gi');
+        
         // Заменяем вхождения на подсвеченные версии
         highlightedSentence = highlightedSentence.replace(
           searchPattern,
-          $1<span class="highlight">$2</span>
+          `<span class="highlight">${token.form}</span>`
         );
       }
+
 
       // 3. Добавляем результат с полным предложением
       results.push({
