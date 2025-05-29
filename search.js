@@ -34,20 +34,19 @@ function loadData() {
     });
 }
 
-// Улучшенная функция для подсветки слова в предложении
-function highlightWord(sentence, word) {
-  // Создаем регулярное выражение для поиска точного слова
-  const regex = new RegExp(`\\b${escapeRegExp(word)}\\b`, 'gi');
-  
-  // Заменяем все вхождения слова с подсветкой
-  return sentence.replace(regex, match => 
-    `<span class="highlight">${match}</span>`
-  );
-}
-
-// Функция для экранирования спецсимволов в регулярных выражениях
+// Функция для экранирования спецсимволов
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Функция для подсветки слова (исправленная)
+function highlightWord(sentence, word) {
+  // Создаем регулярное выражение для точного слова
+  const regex = new RegExp(`(^|[\\s\\p{P}](${escapeRegExp(word)})($|[\\s\\p{P}])`, 'giu');
+  
+  return sentence.replace(regex, (match, prefix, wordMatch, suffix) => {
+    return `${prefix}<span class="highlight">${wordMatch}</span>${suffix}`;
+  });
 }
 
 // Функция поиска
@@ -148,5 +147,4 @@ document.addEventListener('DOMContentLoaded', () => {
   filterNouns.addEventListener('change', performSearch);
   filterVerbs.addEventListener('change', performSearch);
   filterAdjectives.addEventListener('change', performSearch);
-  resultsDiv.innerHTML = '<div class="empty">Введите поисковый запрос в поле выше</div>';
 });

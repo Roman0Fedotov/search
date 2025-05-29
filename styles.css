@@ -123,19 +123,13 @@ h1 {
   line-height: 1.5;
 }
 
-.result-item .highlight {
-  background-color: #fffacd;
-  font-weight: bold;
-  padding: 0 3px;
-  border-radius: 3px;
-}
-
 .result-item .details {
   display: flex;
   gap: 15px;
   margin-top: 10px;
   font-size: 14px;
   color: #7f8c8d;
+  flex-wrap: wrap;
 }
 
 .result-item .details span {
@@ -154,22 +148,7 @@ h1 {
   border-top: 1px solid #eee;
 }
 
-/* Адаптивность */
-@media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
-  
-  .container {
-    padding: 20px;
-  }
-  
-  .filters {
-    flex-direction: column;
-  }
-}
-/* Добавляем в конец файла */
-
+/* Подсветка найденных слов */
 .highlight {
   background-color: #ffeb3b;
   font-weight: bold;
@@ -178,23 +157,7 @@ h1 {
   box-shadow: 0 0 3px rgba(0,0,0,0.3);
 }
 
-.empty {
-  text-align: center;
-  padding: 30px;
-  color: #7f8c8d;
-  font-style: italic;
-}
-
-.error {
-  color: #e74c3c;
-  text-align: center;
-  padding: 20px;
-  border: 1px solid #ffdddd;
-  border-radius: 5px;
-  background: #fffafa;
-}
-/* Добавим в конец файла */
-
+/* Сообщения */
 .empty {
   text-align: center;
   padding: 30px;
@@ -215,10 +178,22 @@ h1 {
   margin: 20px 0;
 }
 
-.highlight {
-  background-color: #fffacd;
-  font-weight: bold;
-  padding: 0 2px;
-  border-radius: 3px;
-  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+/* Адаптивность */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .filters {
+    flex-direction: column;
+  }
+  
+  .result-item .details {
+    flex-direction: column;
+    gap: 8px;
+  }
 }

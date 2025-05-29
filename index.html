@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Поисковик</title>
-  <!-- Подключаем стили -->
+  <title>Поисковик лемм</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Поиск по текстам</h1>
+    <h1>Поиск по леммам в текстах</h1>
     
-    <!-- Поисковая строка -->
     <div class="search-box">
       <input 
         type="text" 
@@ -22,7 +20,6 @@
       <div class="search-icon">🔍</div>
     </div>
     
-    <!-- Фильтры -->
     <div class="filters">
       <label>
         <input type="checkbox" id="filterNouns"> Существительные
@@ -35,19 +32,16 @@
       </label>
     </div>
     
-    <!-- Статус загрузки -->
     <div id="loadingStatus">Загрузка данных...</div>
     
-    <!-- Результаты поиска -->
-    <div id="results"></div>
+    <!-- Единственный контейнер для результатов -->
+    <div id="results">
+      <div class="empty">Введите поисковый запрос в поле выше</div>
+    </div>
     
-    <!-- Статистика -->
     <div id="stats" class="stats"></div>
   </div>
-  <div id="results">
-  <div class="empty">Введите поисковый запрос в поле выше</div>
-</div>
-  <!-- Подключаем скрипт -->
+  
   <script src="search.js"></script>
 </body>
 </html>
