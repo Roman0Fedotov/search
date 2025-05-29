@@ -24,6 +24,7 @@ function loadData() {
     .then(data => {
       textsData = data;
       loadingStatus.textContent = `Данные загружены! Загружено ${data.length} текстов.`;
+      
       setTimeout(() => {
         loadingStatus.style.display = 'none';
       }, 2000);
@@ -32,18 +33,6 @@ function loadData() {
       console.error('Ошибка загрузки данных:', error);
       loadingStatus.innerHTML = `<div class="error">Ошибка загрузки данных!<br>${error.message}</div>`;
     });
-}
-
-// Функция для экранирования спецсимволов
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-// ПРОСТАЯ И ЭФФЕКТИВНАЯ ФУНКЦИЯ ПОДСВЕТКИ
-function highlightWord(sentence, word) {
-  const escapedWord = escapeRegExp(word);
-  const regex = new RegExp(`(${escapedWord})`, 'gi');
-  return sentence.replace(regex, '<span class="highlight">$1</span>');
 }
 
 // Функция поиска
@@ -58,30 +47,64 @@ function performSearch() {
   
   const results = [];
   const activeFilters = [];
-  
   if (filterNouns.checked) activeFilters.push('noun');
   if (filterVerbs.checked) activeFilters.push('verb');
   if (filterAdjectives.checked) activeFilters.push('adjective');
-  
+
+  // Перебираем все тексты
   textsData.forEach(text => {
+    // Собираем все токены, соответствующие запросу
+    const foundTokens = [];
+    
+    // 1. Находим все совпадающие токены
     text.tokens.forEach(token => {
       if (token.lemma.toLowerCase().includes(query)) {
         if (activeFilters.length === 0 || activeFilters.includes(token.pos)) {
-          results.push({
-            textId: text.id,
-            textTitle: text.title,
-            form: token.form,
-            lemma: token.lemma,
-            pos: token.pos,
-            ana: token.ana,
-            sentence: text.sentence
-          });
+          foundTokens.push(token);
         }
       }
     });
+
+    // Если нашли совпадения
+    if (foundTokens.length > 0) {
+      // 2. Формируем полное предложение с подсветкой
+      let fullSentence = text.full_text;
+      
+      // Создаем копию для безопасного изменения
+      let highlightedSentence = fullSentence;
+      
+      // Подсвечиваем все найденные слова в обратном порядке
+      // (чтобы позиции не смещались при вставке тегов)
+      for (let i = foundTokens.length - 1; i >= 0; i--) {
+        const token = foundTokens[i];
+        
+        // Создаем шаблон для поиска с учетом возможных вариаций
+        const searchPattern = new RegExp(`\\b${escapeRegExp(token.form)}\\b`, 'gi');
+        
+        // Заменяем вхождения на подсвеченные версии
+        highlightedSentence = highlightedSentence.replace(
+          searchPattern,
+          `<span class="highlight">${token.form}</span>`
+        );
+      }
+
+      // 3. Добавляем результат с полным предложением
+      results.push({
+        textId: text.id,
+        textTitle: text.title,
+        foundTokens: foundTokens,
+        sentence: highlightedSentence
+      });
+    }
   });
   
+  // Отображаем результаты
   displayResults(results);
+}
+
+// Вспомогательная функция для экранирования спецсимволов в регулярках
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // Функция отображения результатов
@@ -93,22 +116,25 @@ function displayResults(results) {
     return;
   }
   
-  resultsDiv.innerHTML = results.map(result => {
-    const highlightedSentence = highlightWord(result.sentence, result.form);
-    
-    return `
-      <div class="result-item">
-        <h3>${result.textTitle} (ID: ${result.textId})</h3>
-        <div class="sentence">${highlightedSentence}</div>
-        <div class="details">
-          <span>Слово: <b>${result.form}</b></span>
-          <span>Лемма: ${result.lemma}</span>
-          <span>Часть речи: ${getPosName(result.pos)}</span>
-          <span>Анализ: ${result.ana}</span>
-        </div>
+  // Формируем HTML для результатов
+  resultsDiv.innerHTML = results.map(result => `
+    <div class="result-item">
+      <h3>${result.textTitle} (ID: ${result.textId})</h3>
+      
+      <div class="sentence">${result.sentence}</div>
+      
+      <div class="details">
+        ${result.foundTokens.map(token => `
+          <span>
+            Слово: <b>${token.form}</b> | 
+            Лемма: ${token.lemma} | 
+            Часть речи: ${getPosName(token.pos)} | 
+            Анализ: ${token.ana}
+          </span>
+        `).join('')}
       </div>
-    `;
-  }).join('');
+    </div>
+  `).join('');
 }
 
 // Функция для преобразования сокращений частей речи
@@ -121,7 +147,8 @@ function getPosName(abbr) {
     'preposition': 'предлог',
     'conjunction': 'союз',
     'pronoun': 'местоимение',
-    'gerund': 'деепричастие'
+    'gerund': 'деепричастие',
+    'punct': 'знак препинания'
   };
   
   return posMap[abbr] || abbr;
@@ -130,8 +157,13 @@ function getPosName(abbr) {
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
+  
+  // Обработчики событий
   searchInput.addEventListener('input', performSearch);
   filterNouns.addEventListener('change', performSearch);
   filterVerbs.addEventListener('change', performSearch);
   filterAdjectives.addEventListener('change', performSearch);
+  
+  // Инициализируем пустое состояние
+  resultsDiv.innerHTML = '<div class="empty">Введите поисковый запрос в поле выше</div>';
 });
