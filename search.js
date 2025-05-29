@@ -23,7 +23,7 @@ function loadData() {
     })
     .then(data => {
       textsData = data;
-      loadingStatus.textContent = `Данные загружены! Загружено ${data.length} текстов.`;
+      loadingStatus.textContent = Данные загружены! Загружено ${data.length} текстов.;
       
       setTimeout(() => {
         loadingStatus.style.display = 'none';
@@ -31,7 +31,7 @@ function loadData() {
     })
     .catch(error => {
       console.error('Ошибка загрузки данных:', error);
-      loadingStatus.innerHTML = `<div class="error">Ошибка загрузки данных!<br>${error.message}</div>`;
+      loadingStatus.innerHTML = <div class="error">Ошибка загрузки данных!<br>${error.message}</div>;
     });
 }
 
@@ -51,12 +51,9 @@ function performSearch() {
   if (filterVerbs.checked) activeFilters.push('verb');
   if (filterAdjectives.checked) activeFilters.push('adjective');
 
-  // Перебираем все тексты
   textsData.forEach(text => {
-    // Собираем все токены, соответствующие запросу
     const foundTokens = [];
-    
-    // 1. Находим все совпадающие токены
+
     text.tokens.forEach(token => {
       if (token.lemma.toLowerCase().includes(query)) {
         if (activeFilters.length === 0 || activeFilters.includes(token.pos)) {
@@ -65,30 +62,24 @@ function performSearch() {
       }
     });
 
-    // Если нашли совпадения
     if (foundTokens.length > 0) {
-      // 2. Формируем полное предложение с подсветкой
       let fullSentence = text.full_text;
-      
-      // Создаем копию для безопасного изменения
       let highlightedSentence = fullSentence;
-      
-      // Подсвечиваем все найденные слова в обратном порядке
-      // (чтобы позиции не смещались при вставке тегов)
+
       for (let i = foundTokens.length - 1; i >= 0; i--) {
         const token = foundTokens[i];
-        
-        // Создаем шаблон для поиска с учетом возможных вариаций
-        const searchPattern = new RegExp(`${escapeRegExp(token.form)}`, 'gi');
-        
-        // Заменяем вхождения на подсвеченные версии
+
+        const searchPattern = new RegExp(
+          (^|[^\\p{L}])(${escapeRegExp(token.form)})(?=[^\\p{L}]|$),
+          'giu'
+        );
+
         highlightedSentence = highlightedSentence.replace(
           searchPattern,
-          `<span class="highlight">${token.form}</span>`
+          $1<span class="highlight">$2</span>
         );
       }
 
-      // 3. Добавляем результат с полным предложением
       results.push({
         textId: text.id,
         textTitle: text.title,
@@ -97,47 +88,43 @@ function performSearch() {
       });
     }
   });
-  
-  // Отображаем результаты
+
   displayResults(results);
 }
 
-// Вспомогательная функция для экранирования спецсимволов в регулярках
+// Экранирование спецсимволов
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-// Функция отображения результатов
+// Отображение результатов
 function displayResults(results) {
-  statsDiv.textContent = `Найдено результатов: ${results.length}`;
+  statsDiv.textContent = Найдено результатов: ${results.length};
   
   if (results.length === 0) {
     resultsDiv.innerHTML = '<div class="empty">По вашему запросу ничего не найдено</div>';
     return;
   }
-  
-  // Формируем HTML для результатов
-  resultsDiv.innerHTML = results.map(result => `
+
+  resultsDiv.innerHTML = results.map(result => 
     <div class="result-item">
       <h3>${result.textTitle} (ID: ${result.textId})</h3>
-      
       <div class="sentence">${result.sentence}</div>
-      
       <div class="details">
-        ${result.foundTokens.map(token => `
+        ${result.foundTokens.map(token => 
           <span>
             Слово: <b>${token.form}</b> | 
             Лемма: ${token.lemma} | 
             Часть речи: ${getPosName(token.pos)} | 
             Анализ: ${token.ana}
           </span>
-        `).join('')}
+        ).join('')}
       </div>
     </div>
-  `).join('');
+  ).join('');
 }
 
-// Функция для преобразования сокращений частей речи
+// Чтение сокращений POS
 function getPosName(abbr) {
   const posMap = {
     'noun': 'существительное',
@@ -150,20 +137,14 @@ function getPosName(abbr) {
     'gerund': 'деепричастие',
     'punct': 'знак препинания'
   };
-  
   return posMap[abbr] || abbr;
 }
-
-// Инициализация при загрузке страницы
+// Инициализация
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
-  
-  // Обработчики событий
   searchInput.addEventListener('input', performSearch);
   filterNouns.addEventListener('change', performSearch);
   filterVerbs.addEventListener('change', performSearch);
   filterAdjectives.addEventListener('change', performSearch);
-  
-  // Инициализируем пустое состояние
   resultsDiv.innerHTML = '<div class="empty">Введите поисковый запрос в поле выше</div>';
 });
